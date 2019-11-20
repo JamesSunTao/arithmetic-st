@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		function initTree () {
+			var Node = function(key){
+				this.key = key;
+				this.left = null;
+				this.right = null;
+			}
+			var root = null;
+			var insertNode = function (node,new_node) {
+				if (new_node.key < node.key) {
+					if (node.left === null) {
+						node.left = new_node;
+					} else{
+						insertNode(node.left,new_node)
+					}
+				} else{				
+					if (node.right === null) {
+						node.right = new_node;
+					} else{
+						insertNode(node.right,new_node)
+					}
+				}	
+			}
+			this.insert = function (node) {
+				var newNode = new Node(node);
+				if (root === null) {
+					root = newNode;
+				} else{
+					insertNode(root,newNode);
+				}
+			}
+			
+			// 中序遍历
+			var midSearch = function (node,callback) {
+				if (node !== null) {
+					midSearch(node.left);
+					console.log(node.key);
+					midSearch(node.right);
+				}
+			}
+			// 先序遍历
+			var beforeSearch = function (node,callback) {
+				if (node !== null) {
+					console.log(node.key);
+					beforeSearch(node.left);
+					beforeSearch(node.right);
+				}
+			}
+			// 后序遍历
+			var afterSearch = function (node,callback) {
+				if (node !== null) {
+					afterSearch(node.left);
+					afterSearch(node.right);
+					console.log(node.key);
+				}				
+			}
+			
+			// 最大值
+			var Max = function (node) {
+				var maxNum = node.key;
+				if (node.right !== null) {
+					maxNum = Max(node.right)
+				} 
+				return maxNum;
+			}
+			
+			//最小值
+			var Min = function  (node) {
+				var minNum = node.key;
+				if (node.left !== null) {
+					minNum = Min(node.left);
+				}
+				return minNum;
+			}
+			
+			this.midSearchFun = function(callback){//中序遍历接口
+		        midSearch(root,callback)
+		    }
+			this.beforeSearchFun = function(callback){//先序遍历接口
+		        beforeSearch(root,callback)
+		    }
+			this.afterSearchFun = function(callback){//后序遍历接口
+		        afterSearch(root,callback)
+		    }
+			this.maxFun = function () {
+				return Max(root);
+			}
+			this.minFun = function () {
+				return Min(root);
+			}
+		}
+		
+		var arr = [4,7,3,1,5,8,9];
+		var new_tree = new initTree();
+		arr.forEach((item)=>{
+			new_tree.insert(item);
+		})
+		console.log("最大值为："+new_tree.maxFun());
+		console.log("最小值为："+new_tree.minFun());
+		
+		var callback = function(item){
+		    console.log(item)
+		}
+	</script>
+</html>
