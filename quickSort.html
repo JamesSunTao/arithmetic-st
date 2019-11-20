@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>快排</h1>
+	</body>
+	<script type="text/javascript">
+		/**
+		 * 快排 （递归）
+		 * */
+		var quickSort = function (arr) {
+			if (arr.length <= 1) {
+				return arr;
+			}
+			var leftArr = [],rightArr = [],temp=0;
+			temp = arr.splice(Math.floor(arr.length/2),1)[0];
+			arr.forEach(function (value) {
+				if (temp>value) {
+					leftArr.push(value)
+				} else{
+					rightArr.push(value)
+				}
+			})
+			
+			return quickSort(leftArr).concat([temp],quickSort(rightArr));
+		}
+	</script>
+</html>
